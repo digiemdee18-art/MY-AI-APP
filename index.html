@@ -7,7 +7,7 @@
 
 <h2>My First AI App</h2>
 
-<input id="prompt" placeholder="কিছু লিখুন..." />
+<input id="prompt" placeholder="এখানে কিছু লিখুন..." />
 <button onclick="runAI()">Generate</button>
 
 <pre id="output"></pre>
@@ -15,8 +15,22 @@
 <script>
 async function runAI() {
   const text = document.getElementById("prompt").value;
-  document.getElementById("output").innerText = 
-    "আপনি লিখেছেন: " + text;
+  document.getElementById("output").innerText = "Thinking...";
+
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyBwsG-XVgdjZGzzgD9UWAF_oLcPp9nE9cs",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: text }] }]
+      })
+    }
+  );
+
+  const data = await res.json();
+  document.getElementById("output").innerText =
+    data.candidates[0].content.parts[0].text;
 }
 </script>
 
