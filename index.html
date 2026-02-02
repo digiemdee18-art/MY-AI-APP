@@ -1,20 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My AI App</title>
+  <title>Reals in Reality - AI Script Generator</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 5px;
+    }
+    p {
+      color: #aaa;
+      margin-top: 0;
+    }
+    input, select {
+      width: 60%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 25px;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #ff4444;
+      color: white;
+      border: none;
+    }
+    pre {
+      margin-top: 30px;
+      white-space: pre-wrap;
+      text-align: left;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
-<h2>My First AI App</h2>
+<h1>Reals in Reality</h1>
+<p>Fake না, Fact হ্যাঁ</p>
 
-<input id="prompt" placeholder="এখানে কিছু লিখুন..." />
-<button onclick="runAI()">Generate</button>
+<select id="mode">
+  <option value="documentary">Documentary</option>
+  <option value="horror">Horror</option>
+  <option value="normal">Normal</option>
+</select>
+
+<br>
+
+<input id="prompt" placeholder="এখানে আপনার টপিক লিখুন..." />
+
+<br>
+
+<button onclick="runAI()">Generate Script</button>
 
 <pre id="output"></pre>
 
 <script>
 async function runAI() {
   const text = document.getElementById("prompt").value;
+  const mode = document.getElementById("mode").value;
+
+  const finalPrompt = 
+    "Write a " + mode + " style Bengali video script about: " + text;
+
   document.getElementById("output").innerText = "Thinking...";
 
   const res = await fetch(
@@ -23,7 +81,7 @@ async function runAI() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: text }] }]
+        contents: [{ parts: [{ text: finalPrompt }] }]
       })
     }
   );
